@@ -17,7 +17,7 @@ int main() {
     TApplication app ("app", 0, 0);
 
     //Verifico che il file di input sia leggibile
-    ifstream file("file.dat");
+    ifstream file("I_vs_V.dat");
 
     //Creo il grafico
     TGraphErrors gr("file.dat" , "%lg %lg %lg");

@@ -38,9 +38,9 @@ def GeteT(T_amb, V, I, eI, R_amb, gamma):
 #Main
 # Assumendo errore gaussiano (eth/sqrt(3))
 
-V,I,eI = np.loadtxt('T.dat',usecols=(0,1,2),unpack=True)
+V,I,eI = np.loadtxt('T_in.dat',usecols=(0,1,2),unpack=True)
 
-file = open("T_eT.dat", "w") 
+file = open("T_out.dat", "w") 
 
 for i in range(0,V.size):
     T = GetT(T_amb, V[i], I[i], R_amb, gamma)

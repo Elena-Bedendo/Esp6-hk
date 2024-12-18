@@ -13,7 +13,7 @@ int main() {
     TApplication app ("app", 0, 0);
 
     //Creo il grafico
-    TGraphErrors gr("T_vs_Vfd.dat" , "%lg %lg %lg %lg");
+    TGraphErrors gr("Vfd_vs_T.dat" , "%lg %lg %lg %lg");
 
     //Disegno il grafico e metto il nome ai due assi del grafico
     gr.Draw("ap");
