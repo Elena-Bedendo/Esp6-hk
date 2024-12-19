@@ -1,26 +1,21 @@
+//g++ -o fit fit.cpp $(root-config --cflags --libs)
+
+
 //Grafico
 #include <TGraphErrors.h>
 #include <TF1.h>
 #include <TApplication.h>
 #include <TAxis.h>
 //Altro
-#include <cmath>
-#include <fstream>
-#include <string>
-//Base
 #include <iostream>
 using namespace std;
-
 
 
 int main() {
     TApplication app ("app", 0, 0);
 
-    //Verifico che il file di input sia leggibile
-    ifstream file("I_vs_V.dat");
-
     //Creo il grafico
-    TGraphErrors gr("file.dat" , "%lg %lg %lg");
+    TGraphErrors gr("I_vs_V.dat" , "%lg %lg %lg");
 
     //Disegno il grafico e metto il nome ai due assi del grafico
     gr.Draw("ap");
@@ -31,7 +26,7 @@ int main() {
     //Creo la funzione di fit
     TF1 fun("fun", "[0]*pow(x,(4*[1]-1)/(4*[1]+1))");
     fun.SetLineColor(433);  //Definisco colore
-    //fun.SetNpx(10000);  METTERE SOLO SE SERVE!
+
     //Inizializzo i parametri
     fun.SetParameter(0, .05);
     fun.SetParameter(1, 1);
@@ -51,11 +46,8 @@ int main() {
     p0 = fun.GetParameter(0);
     p0_err = fun.GetParError(0);
 
-    //cout << "p0 = " << p0 << "±" << p0_er << endl;
+    cout << "p0 = " << p0 << "±" << p0_er << endl;
 
-    app.Run();
-
-
-    
+    app.Run();    
     return 0;
 }

@@ -1,4 +1,4 @@
-//g++ -o fit fit.cpp $(root-config --cflags --libs)
+//g++ -o fit fit2.cpp $(root-config --cflags --libs)
 
 //Grafico
 #include <TGraphErrors.h>
@@ -7,7 +7,6 @@
 #include <TAxis.h>
 
 using namespace std;
-
 
 int main() {
     TApplication app ("app", 0, 0);
@@ -22,12 +21,11 @@ int main() {
     gr.SetTitle("");
 
     //Creo la funzione di fit
-    TF1 fun("fun", "[0]*pow(exp((TMath::C()*[1])/(x*635e-9))-1 ,-1)");
+    TF1 fun("fun", "[0]*pow(exp((TMath::C()*[1])/(x))-1 ,-1)");
     fun.SetLineColor(433);  //Definisco colore
-    //fun.SetNpx(10000);  METTERE SOLO SE SERVE!
     //Inizializzo i parametri
     fun.SetParameter(0, 1);
-    fun.SetParameter(1, 5e-11);
+    fun.SetParameter(1, 5e-11/635e-9); // h/(k*lambda)
     //Disegno la funzione nel grafico
     gr.Fit("fun");
 
@@ -38,6 +36,13 @@ int main() {
     cout << endl << "Chi quadro: " << chi2 << endl 
     << "Numero di gradi di liberta: " << ndf << endl 
     <<"Probabilita del chi quadro: " << prob << endl;
+
+    //Calcolo h/k e il suo errore
+    double par_1 = fun.GetParameter(1) , lambda = 635e-9;
+    double epar_1 = fun.GetParError(1) , elambda = 5e-9;
+
+    double h_k = par_1 * lambda , eh_k = par_1 * elambda + lambda * epar_1;
+    cout << h_k << " +- " << eh_k;
 
     app.Run();    
     return 0;
